@@ -1,0 +1,27 @@
+<swiper-container *ngIf="isBrowser" loopFillGroupWithBlank="true" autoplay="4000" pagination="true" loop="true"
+    style="width: 100%; height: 400px;">
+    <ng-container *ngFor="let banner of banners">
+        <swiper-slide>
+            <img [src]="banner.image" [alt]="banner.title" style="width:100%; height:400px; object-fit:cover;" />
+        </swiper-slide>
+    </ng-container>
+</swiper-container>
+
+<!-- Product Grid -->
+<section class="container py-5">
+    <div class="row g-4">
+        <div class="col-md-4" *ngFor="let product of products">
+            <div class="card border-0 shadow-sm hover-zoom h-100 product-card">
+                <img [src]="product.image" class="card-img-top rounded" alt="Product image" />
+                <div class="card-body text-center">
+                    <h6 class="card-title text-truncate product-name" title="{{ product.productName }}">
+                        {{ product.productName }}
+                    </h6>
+                    <p class="card-text fw-bold product-price mb-0">
+                        {{ product.price }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

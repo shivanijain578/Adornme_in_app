@@ -1,0 +1,11 @@
+<div class="checkout-card">
+    <h2>Order Summary</h2>
+
+    <p><strong>Address:</strong></p>
+    <p>{{ address.name }}, {{ address.house }}, {{ address.city }}</p>
+
+    <p><strong>Delivery:</strong> {{ delivery }}</p>
+    <p><strong>Payment:</strong> {{ payment.method }}</p>
+
+    <button class="btn-primary w-100 mt-3" (click)="placeOrder()">Place Order</button>
+</div>

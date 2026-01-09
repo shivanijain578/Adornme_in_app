@@ -1,0 +1,13 @@
+<div class="checkout-card">
+    <h2>Select Delivery Option</h2>
+
+    <div class="option" (click)="select('standard')" [class.active]="selected=='standard'">
+        Standard Delivery (3–5 days) — Free
+    </div>
+
+    <div class="option" (click)="select('fast')" [class.active]="selected=='fast'">
+        Fast Delivery (1–2 days) — ₹49
+    </div>
+
+    <button class="btn-primary w-100 mt-3" (click)="continue()">Continue</button>
+</div>

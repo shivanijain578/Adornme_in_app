@@ -1,0 +1,83 @@
+<header class="top-bar d-flex align-items-center justify-content-between px-4 py-3 shadow-sm">
+    <!-- Logo -->
+    <div class="logo-wrapper d-flex align-items-center">
+        <a [routerLink]="['/']">
+            <img src="/images/logo.jpg" alt="AdornMe Logo" class="logo rounded-circle border border-2 border-gold" />
+        </a>
+    </div>
+
+    <!-- Search (desktop only) -->
+    <div class="search-wrapper flex-grow-1 mx-4 d-none d-md-block position-relative">
+        <input type="text" class="form-control rounded-pill ps-5 search-input"
+            placeholder="Find your perfect shine..." />
+        <i class="bi bi-search search-icon position-absolute top-50 end-0 translate-middle-y me-4"></i>
+    </div>
+
+    <!-- User / Links -->
+    <nav class="user-links d-flex align-items-center gap-3 text-secondary">
+
+        <a routerLink="/about" class="nav-link hover-gold d-flex align-items-center gap-1">
+            <i class="bi bi-info-circle"></i> About Us
+        </a>
+
+        <a routerLink="/contact" class="nav-link hover-gold d-flex align-items-center gap-1">
+            <i class="bi bi-envelope"></i> Contact Us
+        </a>
+
+        <a routerLink="/wishlist" class="nav-link hover-gold d-flex align-items-center gap-1">
+            <i class="bi bi-heart"></i> Wishlist
+        </a>
+
+        <a routerLink="/cart" class="nav-link hover-gold d-flex align-items-center gap-1">
+            <i class="bi bi-cart"></i> Cart
+        </a>
+
+        <!-- <div *ngIf="auth.isAdmin()" class="dropdown"> -->
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle hover-gold d-flex align-items-center gap-1" role="button"
+                data-bs-toggle="dropdown">
+                <i class="bi bi-speedometer2"></i> Admin
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li>
+                    <a class="dropdown-item" routerLink="/admin/orders">
+                        <i class="bi bi-list-check me-2"></i> Orders
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" routerLink="/products">
+                        <i class="bi bi-box-seam me-2"></i> Products
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Account / Login -->
+        <span class="nav-link hover-gold d-flex align-items-center gap-1">
+            <i class="bi bi-person"></i>
+            <a *ngIf="auth.isLoggedIn(); else loginLink" [routerLink]="['/account']" class="text-decoration-none">
+                Account
+            </a>
+            <ng-template #loginLink>
+                <a [routerLink]="['/login']" class="text-decoration-none">Login</a>
+            </ng-template>
+        </span>
+
+    </nav>
+</header>
+
+<!-- Filter Bar -->
+<div *ngIf="showFilterBar" class="py-2 text-center small fw-medium shadow-sm">
+    <div class="filter-items d-flex flex-wrap justify-content-center gap-2">
+        <span class="filter-item">Product type</span>
+        <span class="filter-item">Price</span>
+        <span class="filter-item">Shop for</span>
+        <span class="filter-item">Color</span>
+        <span class="filter-item">Metal</span>
+        <span class="filter-item">Stone</span>
+        <span class="filter-item">Style</span>
+        <span class="filter-item">Sub category</span>
+        <span class="filter-item">Sort by: Featured</span>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container">
+    <h2 class="mb-4 text-center">Delivery Address</h2>
+
+    <form (ngSubmit)="saveAddress()" #form="ngForm" class="mx-auto" style="max-width: 500px;">
+        <div class="mb-3">
+            <input class="form-control" placeholder="Full Name" [(ngModel)]="address.name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" placeholder="Phone Number" [(ngModel)]="address.phone" name="phone" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" placeholder="House No / Apartment" [(ngModel)]="address.house" name="house"
+                required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" placeholder="Street / Area" [(ngModel)]="address.street" name="street" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" placeholder="City" [(ngModel)]="address.city" name="city" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" placeholder="State" [(ngModel)]="address.state" name="state" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" placeholder="Pincode" [(ngModel)]="address.pincode" name="pincode" required>
+        </div>
+        <button class="btn-primary w-100 mt-3">Save & Continue</button>
+    </form>
+</div>
