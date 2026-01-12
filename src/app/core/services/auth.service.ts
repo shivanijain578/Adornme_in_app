@@ -1,36 +1,53 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
-export class Auth {
+export class AuthService {
 
-    isLoggedIn(): boolean {
-        return !!localStorage.getItem('user');
+    private baseUrl = environment.apiUrl;
+
+    constructor(private http: HttpClient) { }
+
+    login(data: { email: string, password: string }): Observable<any> {
+        return this.http.post(`${this.baseUrl}/auth/login`, data);
     }
 
-    login(user: any) {
-        localStorage.setItem('user', JSON.stringify(user));
+    register(data: any): Observable<any> {
+        return this.http.post(`${this.baseUrl}/auth/register`, data);
+    }
+
+    forgotPassword(data: { email: string }): Observable<any> {
+        return this.http.post(`${this.baseUrl}/auth/forgot-password`, data);
+    }
+
+    resetPassword(data: { token: string, newPassword: string }): Observable<any> {
+        return this.http.post(`${this.baseUrl}/auth/reset-password`, data);
+    }
+
+    saveUserSession(token: string, role: string) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('role', role);   // e.g. user-admin , user-readonly
     }
 
     logout() {
-        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
     }
 
-    getUser() {
-        const user = localStorage.getItem('user');
-        return user ? JSON.parse(user) : null;
-    }
-
-    getRole(): string | null {
-        return this.getUser()?.role || null;
+    isLoggedIn(): boolean {
+        return !!localStorage.getItem('token');
     }
 
     isAdmin(): boolean {
-        return this.getRole() === 'ADMIN';
+        const role = localStorage.getItem('role');
+        return role === 'user-admin' || role === 'service-admin';
     }
 
-    isUser(): boolean {
-        return this.getRole() === 'USER';
+    getRole(): string | null {
+        return localStorage.getItem('role');
     }
 }

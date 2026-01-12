@@ -1,27 +1,95 @@
-<swiper-container *ngIf="isBrowser" loopFillGroupWithBlank="true" autoplay="4000" pagination="true" loop="true"
-    style="width: 100%; height: 400px;">
+<swiper-container *ngIf="isBrowser && banners?.length" loopFillGroupWithBlank="true" autoplay="4000" pagination="true"
+    loop="true" style="width: 100%; height: 400px;">
+
     <ng-container *ngFor="let banner of banners">
         <swiper-slide>
             <img [src]="banner.image" [alt]="banner.title" style="width:100%; height:400px; object-fit:cover;" />
         </swiper-slide>
     </ng-container>
+
 </swiper-container>
+
+<!-- Filter Bar -->
+<section class="container py-3">
+    <div class="row g-3 align-items-center">
+
+        <!-- Search -->
+        <div class="col-md-3">
+            <input type="text" [(ngModel)]="filters.search" (input)="applyFilters()" class="form-control"
+                placeholder="Search products...">
+        </div>
+
+        <!-- Category -->
+        <div class="col-md-2">
+            <select class="form-select" [(ngModel)]="filters.category" (change)="applyFilters()">
+                <option value="">Category</option>
+                <option *ngFor="let c of categories" [value]="c">
+                    {{ c }}
+                </option>
+            </select>
+        </div>
+
+        <!-- Price -->
+        <div class="col-md-2">
+            <select class="form-select" [(ngModel)]="filters.price" (change)="applyFilters()">
+                <option value="">Price</option>
+                <option value="0-2000">Below ₹2000</option>
+                <option value="2000-5000">₹2000 - ₹5000</option>
+                <option value="5000-10000">₹5000 - ₹10000</option>
+                <option value="10000-50000">₹10000+</option>
+            </select>
+        </div>
+
+        <!-- Gender -->
+        <div class="col-md-2">
+            <select class="form-select" [(ngModel)]="filters.gender" (change)="applyFilters()">
+                <option value="">Shop For</option>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Kids">Kids</option>
+            </select>
+        </div>
+
+        <!-- Sort -->
+        <div class="col-md-3">
+            <select class="form-select" [(ngModel)]="filters.sort" (change)="applyFilters()">
+                <option value="">Sort By</option>
+                <option value="low-high">Price : Low → High</option>
+                <option value="high-low">Price : High → Low</option>
+                <option value="newest">Newest</option>
+            </select>
+        </div>
+
+    </div>
+</section>
 
 <!-- Product Grid -->
 <section class="container py-5">
     <div class="row g-4">
+
         <div class="col-md-4" *ngFor="let product of products">
             <div class="card border-0 shadow-sm hover-zoom h-100 product-card">
-                <img [src]="product.image" class="card-img-top rounded" alt="Product image" />
+
+                <swiper-container pagination="true" navigation="true" style="width:100%; height:260px">
+                    <ng-container *ngFor="let img of product.images">
+                        <swiper-slide>
+                            <img [src]="img" style="width:100%; height:260px; object-fit:cover;">
+                        </swiper-slide>
+                    </ng-container>
+                </swiper-container>
+
                 <div class="card-body text-center">
-                    <h6 class="card-title text-truncate product-name" title="{{ product.productName }}">
-                        {{ product.productName }}
+                    <h6 class="card-title text-truncate product-name" [title]="product.name">
+                        {{ product.name }}
                     </h6>
+
                     <p class="card-text fw-bold product-price mb-0">
-                        {{ product.price }}
+                        ₹{{ product.price }}
                     </p>
                 </div>
+
             </div>
         </div>
+
     </div>
 </section>

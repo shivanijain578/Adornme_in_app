@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Auth } from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -16,7 +16,7 @@ export class TopBar {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    public auth: Auth,
+    private auth: AuthService,
     private router: Router
   ) {
     this.isBrowser = isPlatformBrowser(platformId);

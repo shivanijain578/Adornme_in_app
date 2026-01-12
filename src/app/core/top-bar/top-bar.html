@@ -56,9 +56,9 @@
         <!-- Account / Login -->
         <span class="nav-link hover-gold d-flex align-items-center gap-1">
             <i class="bi bi-person"></i>
-            <a *ngIf="auth.isLoggedIn(); else loginLink" [routerLink]="['/account']" class="text-decoration-none">
+            <!-- <a *ngIf="auth.isLoggedIn(); else loginLink" [routerLink]="['/account']" class="text-decoration-none">
                 Account
-            </a>
+            </a> -->
             <ng-template #loginLink>
                 <a [routerLink]="['/login']" class="text-decoration-none">Login</a>
             </ng-template>
@@ -66,18 +66,3 @@
 
     </nav>
 </header>
-
-<!-- Filter Bar -->
-<div *ngIf="showFilterBar" class="py-2 text-center small fw-medium shadow-sm">
-    <div class="filter-items d-flex flex-wrap justify-content-center gap-2">
-        <span class="filter-item">Product type</span>
-        <span class="filter-item">Price</span>
-        <span class="filter-item">Shop for</span>
-        <span class="filter-item">Color</span>
-        <span class="filter-item">Metal</span>
-        <span class="filter-item">Stone</span>
-        <span class="filter-item">Style</span>
-        <span class="filter-item">Sub category</span>
-        <span class="filter-item">Sort by: Featured</span>
-    </div>
-</div>

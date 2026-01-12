@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth } from '../../core/services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-account',
@@ -8,15 +8,13 @@ import { Auth } from '../../core/services/auth.service';
   templateUrl: './account.html',
   styleUrl: './account.scss'
 })
-export class Account {
+export class AccountComponent {
   user: any;
 
-  constructor(private auth: Auth, private router: Router) {
-    this.user = this.auth.getUser();
+  constructor(private auth: AuthService, private router: Router) {
   }
 
   logout() {
-    this.auth.logout();
     this.router.navigate(['/login']);
   }
 }

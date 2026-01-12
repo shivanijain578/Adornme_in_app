@@ -1,1 +1,28 @@
-<p>view-product works!</p>
+<section class="container py-4" *ngIf="product">
+    <button routerLink="/products" class="btn btn-secondary mb-3">Back</button>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div *ngIf="product.images?.length; else noImg">
+                <img [src]="product.images[0]" class="img-fluid rounded shadow">
+            </div>
+
+            <ng-template #noImg>
+                <img src="assets/no-image.png" class="img-fluid rounded">
+            </ng-template>
+        </div>
+
+        <div class="col-md-7">
+            <h3>{{ product.name }}</h3>
+            <h4 class="text-success">₹{{ product.price }}</h4>
+            <p>{{ product.description }}</p>
+
+            <p><strong>Stock:</strong> {{ product.stock }}</p>
+            <p><strong>Category:</strong> {{ product.categoryId }}</p>
+
+            <button class="btn btn-warning" [routerLink]="['/products/edit', product.id]">
+                Edit
+            </button>
+        </div>
+    </div>
+</section>

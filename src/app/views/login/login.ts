@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 declare const google: any;
 
@@ -10,31 +11,43 @@ declare const google: any;
   styleUrl: './login.scss'
 })
 export class Login implements OnInit {
-  email: string = '';
-  password: string = '';
+
+  email = '';
+  password = '';
   user: any = null;
 
-  constructor(private ngZone: NgZone, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private ngZone: NgZone,
+    private router: Router
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user') || 'null');
     this.initializeGoogleSignIn();
   }
 
-  // Basic login (just a demo, replace with real backend call)
-  loginBasic() {
-    if (this.email && this.password) {
-      const basicUser = {
-        name: this.email.split('@')[0],
-        email: this.email,
-      };
-      localStorage.setItem('user', JSON.stringify(basicUser));
-      this.user = basicUser;
-      this.router.navigate(['/account']); // redirect to account
-    }
+  login() {
+    if (!this.email || !this.password) return;
+
+    this.authService.login({ email: this.email, password: this.password })
+      .subscribe({
+        next: (res: any) => {
+          const userData = {
+            name: res?.user?.name || this.email.split('@')[0],
+            email: res?.user?.email || this.email,
+            role: res?.user?.role || 'USER',
+            token: res?.token
+          };
+
+          localStorage.setItem('user', JSON.stringify(userData));
+          this.router.navigate(['/account']);
+        },
+        error: err => alert(err?.error?.message || 'Invalid credentials')
+      });
   }
 
-  // Google login
+  // GOOGLE LOGIN
   initializeGoogleSignIn() {
     google.accounts.id.initialize({
       client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
@@ -60,10 +73,5 @@ export class Login implements OnInit {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     return JSON.parse(atob(base64));
-  }
-
-  logout() {
-    this.user = null;
-    localStorage.removeItem('user');
   }
 }

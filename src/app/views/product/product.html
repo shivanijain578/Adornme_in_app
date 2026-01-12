@@ -1,1 +1,46 @@
-<p>product works!</p>
+<section class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Products</h4>
+        <button routerLink="/products/add" class="btn btn-primary">Add Product</button>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3" *ngFor="let product of products">
+            <div class="card h-100 shadow-sm">
+
+                <!-- IMAGE CAROUSEL -->
+                <div *ngIf="product.images?.length! > 0; else noImage">
+                    <div id="carousel{{product.id}}" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item" *ngFor="let img of product.images; let i = index"
+                                [class.active]="i===0">
+                                <img [src]="img" class="d-block w-100 rounded" height="160">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-template #noImage>
+                    <img src="assets/no-image.png" class="card-img-top" height="160">
+                </ng-template>
+
+                <div class="card-body text-center">
+                    <h6 class="text-truncate">{{ product.name }}</h6>
+                    <p class="fw-bold">₹{{ product.price }}</p>
+
+                    <button class="btn btn-info btn-sm me-1" [routerLink]="['/products/view', product.id]">
+                        View
+                    </button>
+
+                    <button class="btn btn-warning btn-sm me-1" [routerLink]="['/products/edit', product.id]">
+                        Edit
+                    </button>
+
+                    <button class="btn btn-danger btn-sm" (click)="delete(product.id)">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
